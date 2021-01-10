@@ -1,10 +1,8 @@
 const { MongoClient } = require('mongodb');
-const { mongo: { host, port, database } } = require('./config');
-
-console.log('mongo config', host, port, database);
+const { mongo: { host, port } } = require('./config');
 
 // Connection URI
-const uri = `mongodb://${host}:${port}/${database}?poolSize=20&w=majority`;
+const uri = `mongodb://${host}:${port}/?poolSize=20&w=majority`;
 console.log('mongo uri', uri);
 
 // Create a new MongoClient

@@ -1,6 +1,7 @@
 const express = require('express');
 const { port } = require('./config');
 const db = require('./mongo-client');
+require('./run');
 
 const app = express();
 

@@ -1,10 +1,7 @@
 const fetch = require('node-fetch');
 const {
   robotoff: { baseUrl },
-  intervalSec,
 } = require('./config');
-
-const insightTypes = ['brand', 'label', 'category', 'product_weight'];
 
 const getFetchOptions = type => ({
   headers: {
@@ -81,22 +78,4 @@ const timedFetchQuestions = async (type) => {
   });
 };
 
-const start = () => {
-  let i = 0;
-  setInterval(async () => {
-    const type = insightTypes[i];
-    i += 1;
-    if (i === insightTypes.length) i = 0;
-    const result = await timedFetchQuestions(type);
-    const { data, ...rest } = result;
-    console.log(rest);
-  }, intervalSec * 1000);
-};
-
-// (async function() {
-//   await fetchQuestions('label')
-//     .then(() => process.exit())
-//     .catch((err) => console.error(err) || process.exit(1));
-// })()
-
-start();
+module.exports = timedFetchQuestions;

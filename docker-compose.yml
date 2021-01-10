@@ -12,7 +12,9 @@ services:
     environment:
       - PORT=8000
       - MONGO_HOST=db
-      - MONGO_NAME=moviesdb
+      - MONGO_NAME=robostatus
+      - REQ_INTERVAL=20
+      - ROBOTOFF_BASE_URL=https://robotoff.wild31.com
     ports:
       - 8000
     volumes:

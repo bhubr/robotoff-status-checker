@@ -8,7 +8,7 @@ module.exports = {
     database: process.env.MONGO_NAME || 'mydb',
   },
   robotoff: {
-    baseUrl: process.env.ROBOTOFF_BASE_URL,
+    baseUrl: process.env.ROBOTOFF_BASE_URL || 'https://robotoff.openfoodfacts.org',
   },
   intervalSec: process.env.REQ_INTERVAL ? Number(process.env.REQ_INTERVAL) : 300,
 };
