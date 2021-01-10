@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    image: mongo:4.2
+    volumes:
+      - db_data:/data/db
+  backend:
+    build: ./backend
+    depends_on:
+      - db
+    environment:
+      - PORT=8000
+      - MONGO_HOST=db
+      - MONGO_NAME=moviesdb
+    ports:
+      - 8000
+    volumes:
+      - backend_data:/app-data
+
+volumes:
+  db_data:
+  backend_data:
