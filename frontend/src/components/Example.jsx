@@ -21,7 +21,11 @@ function Example({ stats }) {
     });
   return (
     <div>
-      <XYPlot width={2000} height={500} yDomain={[0, 5000]}>
+      <XYPlot
+        width={window.innerWidth - 50}
+        height={window.innerHeight - 50}
+        yDomain={[0, 5000]}
+      >
         <HorizontalGridLines />
         <VerticalGridLines />
         <XAxis />
