@@ -16,9 +16,17 @@ services:
       - REQ_INTERVAL=20
       - ROBOTOFF_BASE_URL=https://robotoff.wild31.com
     ports:
-      - 8000
+      - "8000:8000"
     volumes:
       - ./data/backend:/app-data
+  frontend:
+    build: ./frontend
+    # depends_on:
+    #   - backend
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8000
+    ports:
+      - "3000:3000"
 
 volumes:
   db_data:
