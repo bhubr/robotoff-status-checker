@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   XYPlot,
   XAxis,
@@ -9,22 +8,24 @@ import {
   LineSeries,
 } from 'react-vis';
 
+const CEIL_MS = 20000;
+
 function Example({ stats }) {
   const processedStats = stats
     .filter((s, i) => i < 1000)
     .map((s, i) => {
       let time = s.recvAt - s.sentAt;
-      if (time > 5000) {
-        time = 5000;
+      if (time > CEIL_MS) {
+        time = CEIL_MS;
       }
       return { ...s, x: i, y: time };
     });
   return (
     <div>
       <XYPlot
-        width={window.innerWidth - 50}
+        width={window.innerWidth - 80}
         height={window.innerHeight - 50}
-        yDomain={[0, 5000]}
+        yDomain={[0, CEIL_MS * 1.05]}
       >
         <HorizontalGridLines />
         <VerticalGridLines />
