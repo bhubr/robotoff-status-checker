@@ -21,7 +21,8 @@ services:
     volumes:
       - ./data/backend:/app-data
   frontend:
-    build: ./frontend
+    context: ./frontend
+    dockerfile: Dockerfile.dev
     # GOD DAMMIT, FUCK!
     # https://stackoverflow.com/questions/60895246/react-app-exiting-in-docker-container-with-exit-code-0
     # https://github.com/facebook/create-react-app/issues/8688
