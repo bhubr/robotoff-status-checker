@@ -13,8 +13,9 @@ services:
       - PORT=8000
       - MONGO_HOST=db
       - MONGO_NAME=robostatus
-      - REQ_INTERVAL=20
-      - ROBOTOFF_BASE_URL=https://robotoff.wild31.com
+      - REQ_INTERVAL=60
+      # - ROBOTOFF_BASE_URL=https://robotoff.wild31.com
+      - ROBOTOFF_BASE_URL=https://robotoff.openfoodfacts.org
     ports:
       - "8000:8000"
     volumes:
