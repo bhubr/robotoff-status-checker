@@ -10,3 +10,10 @@ code {
 .rv-xy-plot {
   margin: 0 auto;
 }
+/*
+.rv-xy-plot > svg {
+  padding: 0 1em;
+} */
+.App-errorRatio {
+  margin-left: 2em;
+}

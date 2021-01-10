@@ -2,6 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Example from './components/Example';
 import './App.css';
 
+const getErrorRatio = (stats) => {
+  if (!stats) return 'N/A';
+
+  const numErrors = stats.filter((s) => s.outcome === 'error').length;
+  const errorRatio = ((100 * numErrors) / stats.length).toFixed(1);
+  return `${errorRatio}%`;
+};
+
 function App() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,6 +39,9 @@ function App() {
       <button type="button" onClick={exportData}>
         Export data
       </button>
+      <span className="App-errorRatio">
+        Error ratio: {getErrorRatio(stats)}
+      </span>
       {stats && <Example stats={stats} />}
     </div>
   );
