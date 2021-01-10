@@ -1,7 +1,25 @@
 const fetch = require('node-fetch');
-const { robotoff: { baseUrl }, intervalSec } = require('./config');
+const {
+  robotoff: { baseUrl },
+  intervalSec,
+} = require('./config');
 
-const insightTypes = ['brand', 'label',  'category', 'product_weight'];
+const insightTypes = ['brand', 'label', 'category', 'product_weight'];
+
+const getFetchOptions = type => ({
+  headers: {
+    accept: 'application/json, text/plain, */*',
+    'accept-language': 'en-US,en;q=0.9',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-site',
+  },
+  referrer: `https://hunger.openfoodfacts.org/questions?type=${type}`,
+  referrerPolicy: 'no-referrer-when-downgrade',
+  body: null,
+  method: 'GET',
+  mode: 'cors',
+});
 
 /**
  * Return response data (parsed JSON or raw text)
@@ -15,7 +33,7 @@ const extractResponseData = async (res) => {
     responseData = await res.text();
   }
   return responseData;
-}
+};
 
 /**
  * Format success response
@@ -41,21 +59,25 @@ const makeFailureResponse = (err) => ({
   data: null,
 });
 
-const fetchQuestions = async (type) => fetch(`${baseUrl}/api/v1/questions/random?count=2&lang=en&insight_types=${type}`)
-  .then(async res => {
-    const { status, ok } = res;
-    const responseData = await extractResponseData(res);
-    return makeSuccessResponse(ok, status, responseData);
-  })
-  .catch(makeFailureResponse);
+const fetchQuestions = async (type) =>
+  fetch(
+    `${baseUrl}/api/v1/questions/random?count=2&lang=en&insight_types=${type}`,
+    getFetchOptions(type),
+  )
+    .then(async (res) => {
+      const { status, ok } = res;
+      const responseData = await extractResponseData(res);
+      return makeSuccessResponse(ok, status, responseData);
+    })
+    .catch(makeFailureResponse);
 
 const timedFetchQuestions = async (type) => {
-  const ts1 = Date.now();
-  return fetchQuestions(type)
-  .then(data => {
-    const ts2 = Date.now();
-    const time = ts2 - ts1;
-    return { type, ...data, time };
+  const sentAt = Date.now();
+  console.log('sent', sentAt);
+  return fetchQuestions(type).then((data) => {
+    const recvAt = Date.now();
+    console.log('recv', recvAt, recvAt - sentAt);
+    return { type, ...data, sentAt, recvAt };
   });
 };
 
@@ -64,11 +86,12 @@ const start = () => {
   setInterval(async () => {
     const type = insightTypes[i];
     i += 1;
+    if (i === insightTypes.length) i = 0;
     const result = await timedFetchQuestions(type);
     const { data, ...rest } = result;
     console.log(rest);
   }, intervalSec * 1000);
-}
+};
 
 // (async function() {
 //   await fetchQuestions('label')
