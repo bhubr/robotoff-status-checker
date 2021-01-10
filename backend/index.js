@@ -1,10 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 const { port } = require('./config');
 const db = require('./mongo-client');
 const { mongo: { database } } = require('./config');
 require('./run');
 
 const app = express();
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send({ status: 'ok' });
