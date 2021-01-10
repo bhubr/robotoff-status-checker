@@ -9,5 +9,6 @@ module.exports = {
   },
   robotoff: {
     baseUrl: process.env.ROBOTOFF_BASE_URL,
-  }
+  },
+  intervalSec: process.env.REQ_INTERVAL ? Number(process.env.REQ_INTERVAL) : 300,
 };
