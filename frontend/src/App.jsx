@@ -28,7 +28,7 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/questions-stats')
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/questions-stats`)
       .then((res) => res.json())
       .then((requests) => {
         const processedRequests = requests
@@ -41,7 +41,7 @@ function App() {
   }, []);
 
   const exportData = () =>
-    fetch('http://localhost:8000/api/questions-stats/export')
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/questions-stats/export`)
       .then(async (res) => {
         if (!res.ok) {
           const message = await res.text();
