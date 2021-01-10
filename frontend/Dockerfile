@@ -11,6 +11,7 @@ RUN yarn
 COPY public /app/public/
 COPY src /app/src/
 COPY node-tutorial.js /app/
+ARG REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL}
 RUN npm run build
 
 # Uses port which is used by the actual application
