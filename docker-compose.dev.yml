@@ -21,12 +21,19 @@ services:
     volumes:
       - ./data/backend:/app-data
   frontend:
-    build:
-      context: ./frontend
-      args:
-        - REACT_APP_BACKEND_URL
+    context: ./frontend
+    dockerfile: Dockerfile.dev
+    # GOD DAMMIT, FUCK!
+    # https://stackoverflow.com/questions/60895246/react-app-exiting-in-docker-container-with-exit-code-0
+    # https://github.com/facebook/create-react-app/issues/8688
+    stdin_open: true
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8000
     ports:
-      - "5000:5000"
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
 
 volumes:
   db_data:
