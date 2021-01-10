@@ -7,5 +7,7 @@ module.exports = {
     port: process.env.MONGO_PORT || 27017,
     database: process.env.MONGO_NAME || 'mydb',
   },
+  robotoff: {
+    baseUrl: process.env.ROBOTOFF_BASE_URL,
+  }
 };
-
