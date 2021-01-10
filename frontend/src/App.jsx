@@ -13,12 +13,25 @@ function App() {
       .catch(setError)
       .finally(() => setLoading(false));
   }, []);
+
+  const exportData = () =>
+    fetch('http://localhost:8000/api/questions-stats/export')
+      .then(async (res) => {
+        if (!res.ok) {
+          const message = await res.text();
+          throw new Error(message);
+        }
+      })
+      .catch(setError);
   if (loading) return <p>loading</p>;
-  if (error) return <p>{error.message}</p>;
 
   return (
     <div className="App">
-      <Example stats={stats} />
+      {error && <p>{error.message}</p>}
+      <button type="button" onClick={exportData}>
+        Export data
+      </button>
+      {stats && <Example stats={stats} />}
     </div>
   );
 }

@@ -6,9 +6,10 @@ COPY package.json yarn.lock /app/
 
 RUN yarn
 
-COPY public /app/public/
 # ATTENTION pour les dossiers il faut préciser le répertoire cible !
-COPY src /app/src/
+# Disabled - use volumes so that we get hot reload
+# COPY public /app/public/
+# COPY src /app/src/
 COPY node-tutorial.js /app/
 
 # Uses port which is used by the actual application
