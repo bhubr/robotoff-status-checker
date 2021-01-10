@@ -14,6 +14,6 @@ COPY node-tutorial.js /app/
 RUN npm run build
 
 # Uses port which is used by the actual application
-EXPOSE 3000
+EXPOSE 5000
 
 CMD [ "npm", "start" ]
