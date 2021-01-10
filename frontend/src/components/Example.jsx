@@ -11,15 +11,11 @@ import {
 const CEIL_MS = 20000;
 
 function Example({ stats }) {
-  const processedStats = stats
-    .filter((s, i) => i < 1000)
-    .map((s, i) => {
-      let time = s.recvAt - s.sentAt;
-      if (time > CEIL_MS) {
-        time = CEIL_MS;
-      }
-      return { ...s, x: i, y: time };
-    });
+  const ceiledStats = stats.map((s, i) => ({
+    ...s,
+    x: i,
+    y: Math.min(s.time, CEIL_MS),
+  }));
   return (
     <div>
       <XYPlot
@@ -31,7 +27,7 @@ function Example({ stats }) {
         <VerticalGridLines />
         <XAxis />
         <YAxis />
-        <LineSeries className="first-series" data={processedStats} />
+        <LineSeries className="first-series" data={ceiledStats} />
       </XYPlot>
     </div>
   );
